@@ -6,7 +6,7 @@ To make the scraper more accurate put the artist as well as the title on the sam
 This works better because the scraper locates video links with a Youtube search query.
 All music will be placed in a new Music subfolder also created by the program.
 
-# Libraries in use
+### Libraries in use
 - Bueatiful Soup 4
   - lxml
 - pytube
