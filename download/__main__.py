@@ -11,7 +11,8 @@ if __name__ == "__main__":
         for word in sys.argv[1:len(sys.argv)]:
             query = query+word+" "
         query = query.rstrip()
-        print(f"Query: {query}")
+        print(f'Searching for: "{query}"')
         path = os.getcwd()
-        song = data.Results(query).get()[0]
-        song.save(path)
+        data.Results(query).get()[0].save(path)
+
+
