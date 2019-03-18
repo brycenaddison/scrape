@@ -1,4 +1,4 @@
-import data
+import download.data
 import os
 import sys
 

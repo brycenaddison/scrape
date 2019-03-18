@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from pytube import YouTube
-from func import ProgressBar
+from download.func import ProgressBar
 from threading import Thread
 import time
 import re
@@ -20,7 +20,7 @@ class Song:
         stream.streams.filter(
             only_audio=True, file_extension='mp4'
         ).first().download(
-            output_path=path, filename=self.title
+            output_path=path, filename=self.title, file_extension='mp3'
         )
 
     def save(self, path):
