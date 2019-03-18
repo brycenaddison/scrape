@@ -1,7 +1,7 @@
 import time
 
-class ProgressBar:
 
+class ProgressBar:
     current_time = lambda: int(round(time.time() * 1000))
 
     def __init__(self, prefix="", suffix=""):
@@ -12,7 +12,6 @@ class ProgressBar:
         self.is_running = False
         self.last_iteration = 0
 
-
     def update(self, stream, chunk, file_handle, bytes_remaining):
         self.is_running = True
         if bytes_remaining > self.total:
@@ -21,11 +20,11 @@ class ProgressBar:
 
     @staticmethod
     def convert_ms(millis: int):
-        seconds=(millis/1000)%60
+        seconds = (millis / 1000) % 60
         seconds = int(seconds)
-        minutes=(millis/(1000*60))%60
+        minutes = (millis / (1000 * 60)) % 60
         minutes = int(minutes)
-        hours=(millis/(1000*60*60))%24
+        hours = (millis / (1000 * 60 * 60)) % 24
         if minutes % 10 == minutes:
             minutes = "0" + str(minutes)
         if hours % 10 == hours:
@@ -56,8 +55,9 @@ class ProgressBar:
             percent = ("{0:." + str(decimals) + "f}").format(100 * (self.iteration / float(self.total)))
             filled_length = int(length * self.iteration // self.total)
             bar = fill * filled_length + '-' * (length - filled_length)
-            print('\r'+' '*100, end='')
-            print('\r%s |%s| %s%% %s %s %s/%s' % (self.prefix, bar, percent, self.suffix, eta, self.iteration, self.total), end='')
+            print('\r' + ' ' * 100, end='')
+            print('\r%s |%s| %s%% %s %s %s/%s' % (
+            self.prefix, bar, percent, self.suffix, eta, self.iteration, self.total), end='')
             if self.iteration == self.total:
                 print()
                 self.is_running = False

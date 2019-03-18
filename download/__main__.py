@@ -13,6 +13,6 @@ if __name__ == "__main__":
         query = query.rstrip()
         print(f'Searching for: "{query}"')
         path = os.getcwd()
-        data.Results(query).get()[0].save(path)
+        download.data.Results(query).get()[0].save(path)
 
 
