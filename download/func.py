@@ -1,7 +1,22 @@
 import time
+import os
+
+
+def get_download_path():
+    """Returns the default downloads path for linux or windows"""
+    if os.name == 'nt':
+        import winreg
+        sub_key = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders'
+        downloads_guid = '{374DE290-123F-4565-9164-39C4925E467B}'
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, sub_key) as key:
+            location = winreg.QueryValueEx(key, downloads_guid)[0]
+        return location
+    else:
+        return os.path.join(os.path.expanduser('~'), 'downloads')
 
 
 class ProgressBar:
+
     current_time = lambda: int(round(time.time() * 1000))
 
     def __init__(self, prefix="", suffix=""):
@@ -55,9 +70,9 @@ class ProgressBar:
             percent = ("{0:." + str(decimals) + "f}").format(100 * (self.iteration / float(self.total)))
             filled_length = int(length * self.iteration // self.total)
             bar = fill * filled_length + '-' * (length - filled_length)
-            print('\r' + ' ' * 100, end='')
+            print('\r' + ' ' * 100, end='\r')
             print('\r%s |%s| %s%% %s %s %s/%s' % (
-            self.prefix, bar, percent, self.suffix, eta, self.iteration, self.total), end='')
+            self.prefix, bar, percent, self.suffix, eta, self.iteration, self.total), end='\r')
             if self.iteration == self.total:
                 print()
                 self.is_running = False

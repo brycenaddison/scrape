@@ -13,6 +13,7 @@ class Song:
         self.title = vid['title']
         self.thumbnail = thumbnail
 
+
     def get_stream(self):
         return YouTube(self.link)
 
@@ -47,6 +48,12 @@ class Song:
 
     def __repr__(self):
         return self.info()
+
+    def get_title(self):
+        return self.title
+
+    def get_thumbnail(self):
+        return self.thumbnail
 
 
 class Results:
