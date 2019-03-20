@@ -4,6 +4,7 @@ from PySide2 import QtGui, QtCore, QtWidgets
 from download import func
 from download.data import Song, Results
 import time
+from threading import Thread
 import urllib.request
 import sys
 
@@ -14,7 +15,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.text_display = False
         self.song = None
-
+        self.ready = True
         self.search_button.setEnabled(False)
         self.download_button.setEnabled(False)
         self.download_path = func.get_download_path()
@@ -36,14 +37,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.search_button.setEnabled(True)
 
     def search(self):
-        self.text("Searching...")
-
-
-    def run_search(self):
-        if len(Results(self.search_bar.text().strip(" ")).get()) == 0:
+        results = Results(self.search_bar.text().strip(" ")).get()
+        if len(results) == 0:
             self.text(self.red("No results found. Try a different query."))
         else:
-            self.change_song(Results(self.search_bar.text().strip(" ")).get()[0])
+            self.change_song(results[0])
 
     def change_dir(self):
         self.download_path = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
@@ -76,6 +74,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not self.text_display:
             self.text_layout()
         self.info_text.setText(QApplication.translate("MainWindow", text, None, -1))
+        self.ready = True
 
     def song_layout(self):
         self.info_text.setParent(None)
