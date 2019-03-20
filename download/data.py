@@ -57,18 +57,24 @@ class Song:
 
 
 class Results:
-    NUM_RESULTS = 4624
+    NUM_RESULTS = 10
 
     def __init__(self, query):
         self.query = query
-        self.page = BeautifulSoup(requests.get("https://www.youtube.com/results?search_query=" + query + "&sp=EgIQAQ%253D%253D").text, 'lxml')
+        self.page = []
+        self.vids = []
+        self.thumbnails = []
+        self.songs = []
+        self.search_thread = Thread(target=self.run, args=(query,))
+
+    def run(self, query):
+        self.page = BeautifulSoup(
+            requests.get("https://www.youtube.com/results?search_query=" + query + "&sp=EgIQAQ%253D%253D").text, 'lxml')
         self.vids = self.page.findAll('a', attrs={'class': 'yt-uix-tile-link'})[0:__class__.NUM_RESULTS]
         self.thumbnails = self.page.findAll(
             'span',
             attrs={'class': 'yt-thumb-simple'}
         )[0:__class__.NUM_RESULTS]
-        self.songs = []
-        self.images = []
         for i in range(0, __class__.NUM_RESULTS):
             try:
                 img = re.findall('data-thumb="(.*?)"', str(self.thumbnails[i]))[0].replace('&amp;', '&')
@@ -81,6 +87,8 @@ class Results:
                 img = "https:" + img
             self.songs.append(Song(self.vids[i], img))
 
+    def thread_running(self):
+        return self.search_thread.is_alive()
 
     def get(self):
         return self.songs

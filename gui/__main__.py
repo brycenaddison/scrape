@@ -36,8 +36,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.search_button.setEnabled(True)
 
     def search(self):
-        pool = ThreadPool(processes=1)
-        pool.apply_async(
         results = Results(self.search_bar.text().strip(" ")).get()
         if len(results) == 0:
             self.text(self.red("No results found. Try a different query."))
