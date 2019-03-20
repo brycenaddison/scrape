@@ -66,6 +66,7 @@ class Results:
         self.thumbnails = []
         self.songs = []
         self.search_thread = Thread(target=self.run, args=(query,))
+        self.search_thread.start()
 
     def run(self, query):
         self.page = BeautifulSoup(
@@ -91,6 +92,7 @@ class Results:
         return self.search_thread.is_alive()
 
     def get(self):
+        self.search_thread.join()
         return self.songs
 
 
