@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'gui/scrape.ui',
 # licensing of 'gui/scrape.ui' applies.
 #
-# Created: Tue Mar 19 21:18:34 2019
+# Created: Tue Mar 19 21:05:38 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,7 +13,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(571, 377)
+        MainWindow.resize(571, 379)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -33,8 +33,6 @@ class Ui_MainWindow(object):
         self.search_label = QtWidgets.QLabel(self.centralwidget)
         self.search_label.setObjectName("search_label")
         self.verticalLayout_2.addWidget(self.search_label)
-        self.search_layout = QtWidgets.QVBoxLayout()
-        self.search_layout.setObjectName("search_layout")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.search_bar = QtWidgets.QLineEdit(self.centralwidget)
@@ -43,8 +41,7 @@ class Ui_MainWindow(object):
         self.search_button = QtWidgets.QPushButton(self.centralwidget)
         self.search_button.setObjectName("search_button")
         self.horizontalLayout_3.addWidget(self.search_button)
-        self.search_layout.addLayout(self.horizontalLayout_3)
-        self.verticalLayout_2.addLayout(self.search_layout)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
         self.song_box = QtWidgets.QHBoxLayout()
@@ -67,7 +64,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem3)
-
         self.change_search_button = QtWidgets.QPushButton(self.centralwidget)
         self.change_search_button.setObjectName("change_search_button")
         self.horizontalLayout_5.addWidget(self.change_search_button)
