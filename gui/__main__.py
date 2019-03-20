@@ -3,8 +3,7 @@ from PySide2.QtWidgets import QApplication, QFileDialog, QMainWindow, QLabel, QP
 from PySide2 import QtGui, QtCore, QtWidgets
 from download import func
 from download.data import Song, Results
-import time
-from threading import Thread
+from multiprocessing.pool import ThreadPool
 import urllib.request
 import sys
 
@@ -37,6 +36,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.search_button.setEnabled(True)
 
     def search(self):
+        pool = ThreadPool(processes=1)
+        pool.apply_async(
         results = Results(self.search_bar.text().strip(" ")).get()
         if len(results) == 0:
             self.text(self.red("No results found. Try a different query."))
@@ -51,7 +52,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.text_display:
             self.song_layout()
         self.song = song
-        print(song.get_thumbnail())
         data = urllib.request.urlopen(song.get_thumbnail()).read()
         image = QtGui.QImage()
         image.loadFromData(data)
@@ -59,11 +59,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.song_name_label.setText(QApplication.translate("MainWindow", song.get_title(), None, -1))
 
     def text_layout(self):
-        self.change_search_button.setParent(None)
-        self.song_name_label.setParent(None)
-        self.picture_label.setParent(None)
-        self.verticalLayout.setParent(None)
-        self.horizontalLayout_5.setParent(None)
+        self.change_search_button.deleteLater()
+        self.song_name_label.deleteLater()
+        self.picture_label.deleteLater()
+        self.verticalLayout.deleteLater()
+        self.horizontalLayout_5.deleteLater()
         self.info_text = QLabel(self.centralwidget)
         self.info_text.setTextFormat(QtCore.Qt.AutoText)
         self.info_text.setObjectName("info_text")
@@ -77,7 +77,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ready = True
 
     def song_layout(self):
-        self.info_text.setParent(None)
+        self.info_text.deleteLater()
         self.picture_label = QtWidgets.QLabel(self.centralwidget)
         self.picture_label.setText("")
         self.picture_label.setPixmap(QtGui.QPixmap("../../../Downloads/hqdefault.jpg"))

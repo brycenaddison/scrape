@@ -57,11 +57,11 @@ class Song:
 
 
 class Results:
-    NUM_RESULTS = 5
+    NUM_RESULTS = 4624
 
     def __init__(self, query):
         self.query = query
-        self.page = BeautifulSoup(requests.get("https://www.youtube.com/results?search_query=" + query).text, 'lxml')
+        self.page = BeautifulSoup(requests.get("https://www.youtube.com/results?search_query=" + query + "&sp=EgIQAQ%253D%253D").text, 'lxml')
         self.vids = self.page.findAll('a', attrs={'class': 'yt-uix-tile-link'})[0:__class__.NUM_RESULTS]
         self.thumbnails = self.page.findAll(
             'span',
@@ -77,7 +77,10 @@ class Results:
                     img = re.findall('src="(.*?)"', str(self.thumbnails[i]))[0].replace('&amp;', '&')
                 except IndexError:
                     break
+            if img.startswith("//"):
+                img = "https:" + img
             self.songs.append(Song(self.vids[i], img))
+
 
     def get(self):
         return self.songs
