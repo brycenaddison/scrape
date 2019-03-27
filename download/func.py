@@ -33,6 +33,9 @@ class ProgressBar:
             self.total = bytes_remaining
         self.iteration = self.total - bytes_remaining
 
+    def get_percent(self):
+        return 100 * (self.iteration / float(self.total))
+
     @staticmethod
     def convert_ms(millis: int):
         seconds = (millis / 1000) % 60

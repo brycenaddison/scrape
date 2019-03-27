@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'gui/scrape.ui',
 # licensing of 'gui/scrape.ui' applies.
 #
-# Created: Tue Mar 19 21:18:34 2019
+# Created: Tue Mar 26 09:51:17 2019
 #      by: pyside2-uic  running on PySide2 5.12.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,7 +13,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(571, 377)
+        MainWindow.resize(571, 409)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -45,6 +45,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addWidget(self.search_button)
         self.search_layout.addLayout(self.horizontalLayout_3)
         self.verticalLayout_2.addLayout(self.search_layout)
+        self.info_text = QtWidgets.QLabel(self.centralwidget)
+        self.info_text.setObjectName("info_text")
+        self.verticalLayout_2.addWidget(self.info_text)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
         self.song_box = QtWidgets.QHBoxLayout()
@@ -67,7 +70,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem3)
-
         self.change_search_button = QtWidgets.QPushButton(self.centralwidget)
         self.change_search_button.setObjectName("change_search_button")
         self.horizontalLayout_5.addWidget(self.change_search_button)
@@ -104,6 +106,7 @@ class Ui_MainWindow(object):
         self.dir_button.setText(QtWidgets.QApplication.translate("MainWindow", "...", None, -1))
         self.search_label.setText(QtWidgets.QApplication.translate("MainWindow", "Download Song", None, -1))
         self.search_button.setText(QtWidgets.QApplication.translate("MainWindow", "Search", None, -1))
+        self.info_text.setText(QtWidgets.QApplication.translate("MainWindow", "<html><head/><body><p>text_here</p></body></html>", None, -1))
         self.song_name_label.setText(QtWidgets.QApplication.translate("MainWindow", "song_name", None, -1))
         self.change_search_button.setText(QtWidgets.QApplication.translate("MainWindow", "Not correct?", None, -1))
         self.progress_label.setText(QtWidgets.QApplication.translate("MainWindow", "Downloading song 1/1 (song_name)", None, -1))
