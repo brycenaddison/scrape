@@ -207,7 +207,7 @@ class Stream(object):
             self.filesize, fp,
         )
 
-        with open(fp, 'wb') as fh:
+        with open(fp, 'wb+') as fh:
             for chunk in request.get(self.url, streaming=True):
                 # reduce the (bytes) remainder by the length of the chunk.
                 bytes_remaining -= len(chunk)

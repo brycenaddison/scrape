@@ -18,6 +18,7 @@ class Song:
         return YouTube(self.link)
 
     def pull(self, stream, path):
+        print(stream.views())
         stream.streams.filter(
             only_audio=True, file_extension='mp4'
         ).first().download(
@@ -71,11 +72,23 @@ class Results:
     def run(self, query):
         self.page = BeautifulSoup(
             requests.get("https://www.youtube.com/results?search_query=" + query + "&sp=EgIQAQ%253D%253D").text, 'lxml')
-        self.vids = self.page.findAll('a', attrs={'class': 'yt-uix-tile-link'})[0:__class__.NUM_RESULTS]
+        falsevids = self.page.findAll('a', attrs={'class': 'yt-uix-tile-link'})
+        self.vids = self.page.findAll('a', attrs={'class': 'yt-uix-tile-link', 'aria-describedby': True})
+        print(self.vids[0])
         self.thumbnails = self.page.findAll(
             'span',
             attrs={'class': 'yt-thumb-simple'}
-        )[0:__class__.NUM_RESULTS]
+        )
+
+        while True:
+            for i in range(len(self.vids)):
+                if falsevids[i] != self.vids[i]:
+                    del self.thumbnails[i]
+                    break
+            break
+
+
+        print(self.thumbnails[0])
         for i in range(0, __class__.NUM_RESULTS):
             try:
                 img = re.findall('data-thumb="(.*?)"', str(self.thumbnails[i]))[0].replace('&amp;', '&')
