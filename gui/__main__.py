@@ -5,6 +5,7 @@ from PySide2.QtCore import QTimer
 from download import func
 from download.data import Song, Results
 from threading import Thread
+import time
 import requests
 import urllib.request
 import sys
@@ -84,6 +85,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.song_layout()
 
     def download_song(self):
+        self.download_button.setEnabled(False)
         self.downloads.append(self.song)
         if not self.download_in_progress:
             self.start_download()
@@ -91,17 +93,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def start_download(self):
         for song in self.downloads:
             self.progress_label.setText(f"Downloading {song.get_title()}...")
-            t = Thread(target=self.download_worker, args=(song,))
+            progress_bar = func.ProgressBar()
+            self.progress_bar.show()
+            t = Thread(target=self.download_worker, args=(song, progress_bar,))
+            bar = Thread(target=self.progress_update, args=(progress_bar,))
             t.start()
+            bar.start()
 
-    def download_worker(self, song: Song):
+    def download_worker(self, song: Song, progress_bar: func.ProgressBar):
         stream = song.get_stream()
+        info = Thread(target=stream.register_on_progress_callback, args=(progress_bar.update,))
+        info.start()
         song.pull(stream, self.download_dir.text())
-        self.text("Downloading")
 
-
-    def progress_update(self):
-        pass
+    def progress_update(self, progress_bar: func.ProgressBar):
+        #
+        #self.progress_bar.setProperty("value", 0)
+        while not progress_bar.in_progress():
+            time.sleep(0.05)
+        while progress_bar.in_progress():
+            if progress_bar.is_new():
+                print(progress_bar.get_percent())
+               #S self.progress_bar.setProperty("value", progress_bar.get_percent())
 
     def text(self, text):
         self.info_text.setText(text)

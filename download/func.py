@@ -28,12 +28,16 @@ class ProgressBar:
         self.last_iteration = 0
 
     def update(self, stream, chunk, file_handle, bytes_remaining):
-        self.is_running = True
         if bytes_remaining > self.total:
             self.total = bytes_remaining
         self.iteration = self.total - bytes_remaining
+        if bytes_remaining == 0:
+            self.is_running = False
+        else:
+            self.is_running = True
 
     def get_percent(self):
+        self.last_iteration = self.iteration
         return 100 * (self.iteration / float(self.total))
 
     @staticmethod
@@ -83,3 +87,6 @@ class ProgressBar:
 
     def in_progress(self):
         return self.is_running
+
+    def is_new(self):
+        return self.iteration != self.last_iteration

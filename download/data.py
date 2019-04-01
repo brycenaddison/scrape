@@ -18,7 +18,6 @@ class Song:
         return YouTube(self.link)
 
     def pull(self, stream, path):
-        print(stream.views())
         stream.streams.filter(
             only_audio=True, file_extension='mp4'
         ).first().download(
